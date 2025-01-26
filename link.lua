@@ -1,27 +1,21 @@
 local HttpService = game:GetService("HttpService")
-local player = game.Players.LocalPlayer
+local code = math.random(100000, 999999)  -- Generate a random 6-digit code
+local hwid = game:GetService("Players").LocalPlayer.UserId -- Placeholder for HWID, this is a basic example
 
--- Generate a random 6-digit verification code
-local code = math.random(100000, 999999)
+-- Format the data
+local data = {code = code, hwid = hwid}
 
--- Print the code to the Roblox console
-print("Your 6-digit verification code is: " .. code)
-
--- Prepare data to send to the Discord bot (the bot will listen to this)
-local botUrl = "http://127.0.0.1:5000/verify_code"  -- Server endpoint for verifying code
-local userID = player.UserId
-local hwid = gethwid()  -- You may replace with the actual method to get HWID if required
-
-local data = {
-    user_id = userID,
-    hwid = hwid,
-    code = code
-}
-
-local jsonData = HttpService:JSONEncode(data)
-
--- Send the data to the bot server to validate the code
+-- Send the code and HWID to the server
+local url = "http://127.0.0.1:5000/link_code"
 local success, response = pcall(function()
-    HttpService:PostAsync(botUrl, jsonData, Enum.HttpContentType.ApplicationJson)
+    return HttpService:PostAsync(url, HttpService:JSONEncode(data), Enum.HttpContentType.ApplicationJson)
 end)
 
+if success then
+    print("Verification code sent successfully!")
+else
+    print("Error sending verification code: " .. response)
+end
+
+-- Print the verification code to Roblox console for the user
+print("Your 6-digit verification code is: " .. code)
