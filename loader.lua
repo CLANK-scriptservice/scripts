@@ -1,21 +1,22 @@
 local function loadScriptHub()
+    local placeId = game.PlaceId
     local scripts = {
-        [125723653259639] = "https://raw.githubusercontent.com/CLANK-scriptservice/scripts/refs/heads/main/DrillDiggingSim.lua",
+        [125723653259639] = "https://raw.githubusercontent.com/CLANK-scriptservice/scripts/refs/heads/main/DrillDiggingSim",
         [15862090066] = "https://raw.githubusercontent.com/CLANK-scriptservice/scripts/refs/heads/main/make%26sellweapons.lua",
         [8328351891] = "https://raw.githubusercontent.com/CLANK-scriptservice/scripts/refs/heads/main/Mega%20Mansion%20Tycoon",
         --[] = "",
     }
 
-    if scripts[game.placeId] then
+    if scripts[placeId] then
         local success, err = pcall(function()
-            loadstring(game:HttpGet(scripts[game.PlaceId]))()
+            loadstring(game:HttpGet(scripts[placeId]))()
         end)
         
         if not success then
-            warn("Failed to load script for PlaceId " .. game.PlaceId .. ": " .. err)
+            warn("Failed to load script for PlaceId " .. placeId .. ": " .. err)
         end
     else
-        warn("No script found for PlaceId " .. game.PlaceId)
+        warn("No script found for PlaceId " .. placeId)
     end
 end
 
