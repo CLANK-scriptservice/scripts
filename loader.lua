@@ -6,7 +6,7 @@ local function loadScriptHub()
         --[] = "",
     }
 
-    if scripts[placeId] then
+    if scripts[game.placeId] then
         local success, err = pcall(function()
             loadstring(game:HttpGet(scripts[game.PlaceId]))()
         end)
